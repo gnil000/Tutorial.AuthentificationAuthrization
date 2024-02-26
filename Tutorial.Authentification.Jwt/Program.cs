@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { //метод добавл€ет конфигурацию токена
-	options.TokenValidationParameters = new TokenValidationParameters { 
+	options.TokenValidationParameters = new TokenValidationParameters {
 		// указывает, будет ли валидироватьс€ издатель при валидации токена
 		ValidateIssuer = true,
 		// строка, представл€юща€ издател€
@@ -59,7 +59,7 @@ public class AuthOptions
 	public const string ISSUER = "MyAuthServer";
 	// потребитель токена
 	public const string AUDIENCE = "MyAuthClient";
-	// ключ дл€ шифрации
+	//ключ дл€ шифрации
 	const string KEY = "mysupersecret_secretsecretsecretkey!123";
 	//метод возращающий ключ безопасности дл€ генерации токена
 	public static SymmetricSecurityKey GetSymmetricSecurityKey() => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
